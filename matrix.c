@@ -57,6 +57,9 @@ int main(int argc, char* argv[])
   int w = 0, h = 0;
   getmaxyx(win, h, w);
 
+  // Halve the width
+  w = w / 2;
+
   // Initialize the character list
   wchar_t alphabet[] = {L"゠ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタ"
                          "ダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミ"
@@ -131,7 +134,7 @@ int main(int argc, char* argv[])
         {
           case spawner:
             attron(COLOR_PAIR(1));
-            mvprintw(y, x, "%lc", alphabet[currentChar->index]);
+            mvprintw(y, x*2, "%lc", alphabet[currentChar->index]);
 
             // "Move" the spawner one character down
             if (y < (h - 1))
@@ -156,7 +159,7 @@ int main(int argc, char* argv[])
             break;
           case stuckStatic:
             attron(COLOR_PAIR(2));
-            mvprintw(y, x, "%lc", alphabet[currentChar->index]);
+            mvprintw(y, x*2, "%lc", alphabet[currentChar->index]);
 
             if (currentChar->framesLeft-- <= 0)
             {
@@ -174,7 +177,7 @@ int main(int argc, char* argv[])
               currentChar->index = rand() % alphabetSize;
             }
             attron(COLOR_PAIR(1));
-            mvprintw(y, x, "%lc", alphabet[currentChar->index]);
+            mvprintw(y, x*2, "%lc", alphabet[currentChar->index]);
             if (currentChar->framesLeft-- <= 0)
             {
               currentChar->type = empty;
